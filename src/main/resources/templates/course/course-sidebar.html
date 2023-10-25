@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+  <aside class="sidebar" >
+    <div class="toggle">
+      <a href="#" class="burger js-menu-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span></span>
+      </a>
+    </div>
+    <div class="side-inner">
+
+      <div th:fragment="fragment-sidebar(courseId, user)" >
+      <div th:if="${user.role.name() == 'ROLE_INSTRUCTOR'}" class="list-group list-group-flush">
+      <div class="menu mt-5">
+        <ul>
+          <li class="mb-3"><a th:href="@{/courses/__${courseId}__/notice-board}" class="item"><span class="icon-notifications me-2"></span>공지사항</a></li>
+          <li class="mb-3"><a th:href="@{/courses/__${courseId}__/question-board}" class="item"><span class="icon-location-arrow me-2"></span>질문 게시판</a></li>
+          <li class="mb-3"><a th:href="@{/courses/__${courseId}__/free-board}" class="item"><span class="icon-pie-chart me-2"></span>자유 게시판</a></li>
+          <li class="mb-3"><a th:href="@{/courses/__${courseId}__/my-vm}" class="item"><span class="icon-sign-out me-2"></span>나의 가상 환경</a></li>
+          <li class="mb-3"><a th:href="@{/courses/__${courseId}__/students}" class="item"><span class="icon-sign-out me-2"></span>수강생 관리</a></li>
+          <li class="mb-3"><a th:href="@{/courses/__${courseId}__/setting}" class="item"><span class="icon-sign-out me-2"></span>설정 및 관리</a></li>
+        </ul>
+      </div>
+      </div>
+
+      <div th:if="${user.role.name() == 'ROLE_STUDENT'}" class="list-group list-group-flush">
+        <div class="menu mt-5">
+          <ul>
+            <li class="mb-3"><a th:href="@{/courses/__${courseId}__/notice-board}"><span class="icon-notifications me-2"></span>공지사항</a></li>
+            <li class="mb-3"><a th:href="@{/courses/__${courseId}__/question-board}"><span class="icon-location-arrow me-2"></span>질문 게시판</a></li>
+            <li class="mb-3"><a th:href="@{/courses/__${courseId}__/free-board}"><span class="icon-pie-chart me-2"></span>자유 게시판</a></li>
+            <li class="mb-3"><a th:href="@{/courses/__${courseId}__/my-vm}"><span class="icon-sign-out me-2"></span>나의 가상 환경</a></li>
+            <li class="mb-3"><a th:href="@{/courses/__${courseId}__/instructor-vm}"><span class="icon-sign-out me-2"></span>교육자의 가상 환경 보기</a></li>
+            <li class="mb-3 mt-4"><a th:href="@{/courses/__${courseId}__/setting}"><span class="icon-sign-out me-2"></span>설정 및 관리</a></li>
+          </ul>
+        </div>
+      </div>
+        </div>
+
+    </div>
+
+  </aside>
+
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+</html>

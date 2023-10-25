@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 header -->
+<div th:replace="fragments/header.html::fragment-header"></div>
+<style>
+    .container2 {
+        max-width: 1500px;
+    }
+    .card{
+        padding: 30px 40px;
+        margin-bottom: 60px;
+        border: none !important;
+        width: 600px;
+    }
+    .form-control-label{
+        margin-bottom: 0
+    }
+    .radio-label{
+        font-size: 15px !important;
+    }
+    label {
+        font-size: 18px !important;
+    }
+    input, textarea{
+        padding: 8px 15px;
+        border-radius: 5px !important;
+        margin: 5px 0px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        font-size: 15px !important;
+        font-weight: 300;
+        color: #666 !important;
+    }
+    input:focus, textarea:focus {
+        -moz-box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        border: 1px solid #00BCD4;
+        outline-width: 0;
+        font-weight: 400
+    }
+    textarea{
+        height: 150px;
+    }
+</style>
+<body>
+
+<!-- 공통 navigation-->
+<div th:replace="fragments/nav.html::fragment-nav(${user})"></div>
+</br>
+</br>
+
+<section id="pricing" class="pricing">
+    <div class="row container container2 mx-auto" data-aos="fade-up">
+        <div class="section-title">
+            <h2>질문 글 수정하기</h2>
+            <h3 th:text="${courseDTO.name}">강좌 이름</h3>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-2 order-1 order-sm-1">
+            <div th:replace="course/course-sidebar.html::fragment-sidebar(${courseDTO.id}, ${user})"></div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-8 col-lg-8 order-2 order-sm-2">
+            <div class="row">
+                <div class="col">
+                    <div class="card mx-auto">
+                        <form class="form-card needs-validation" th:object="${updateDTO}" method="post">
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-12 flex-column d-flex">
+                                    <label for="title" class="form-control-label px-3 mb-2">제목<span class="text-danger"> *</span></label>
+                                    <input type="text" id="title" th:field="*{title}" required>
+                                </div>
+                            </div>
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-12 flex-column d-flex">
+                                    <label for="content" class="form-control-label px-3 mb-2">내용<span class="text-danger"> *</span></label>
+                                    <textarea id="content" th:field="*{content}" required></textarea>
+                                </div>
+                            </div>
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-12 flex-column d-flex">
+                                    <label for="content" class="form-control-label px-3 mb-2">공개<span class="text-danger"> *</span></label>
+                                    <div class="row radio-group">
+                                        <div th:each="type, iterStat : ${scopes}" class="col-sm-6">
+                                            <label class="col-sm-6 col-form-label radio-label" th:text="${type.description}" th:for="${'scope-' + iterStat.index}">공개</label>
+                                            <input type="radio" th:id="${'scope-' + iterStat.index}" name="scope" th:field="*{scope}" th:value="${type.name()}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="form-group col-sm-6 text-center">
+                                    <button class="btn btn-outline-primary" type="submit">저장</button>
+                                    <button class="btn btn-outline-danger"
+                                            th:onclick="|location.href='@{/courses/{courseId}/question-board(courseId=${courseDTO.id})}'|"
+                                            type="button">취소</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 공통 footer -->
+<div th:replace="fragments/footer.html::fragment-footer"></div>
+
+<!-- 공통 script -->
+<div th:replace="fragments/script.html::fragment-script"></div>
+</body>
+
+</html>

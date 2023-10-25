@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 header -->
+<div th:replace="fragments/header.html :: fragment-header"></div>
+
+<body>
+<!-- 공통 nav -->
+<div th:replace="fragments/nav-before.html :: fragment-nav-before"></div>
+
+
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="d-flex align-items-center">
+    <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+        <div class="row justify-content-center">
+            <div class="col-xl-7 col-lg-9 text-center">
+                <h1>P2K web page</h1>
+                </br>
+                <p>우리의 서비스는 <b style="color:#124265;">클라우드 기반 원격 데스크탑 서비스</b>를 제공합니다. <br>
+                    언제 어디서든지 웹 페이지 접속을 통해 자신만의 가상환경에 접속할 수 있습니다. <br>
+                    로그인/회원가입을 통해 서비스를 이용할 수 있습니다. </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 공통 footer -->
+<div th:replace="fragments/footer.html :: fragment-footer"></div>
+
+<div id="preloader"></div>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- 공통 script -->
+<div th:replace="fragments/script.html :: fragment-script"></div>
+
+</body>
+
+</html>

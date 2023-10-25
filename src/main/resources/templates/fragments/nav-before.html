@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Top navigation-->
+
+<div th:fragment="fragment-nav-before" id="header" class="fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+        <a href="/home"><img class="m-1" src="/assets/p2k_logo_b.png" alt="" width="80" height="50"></a>
+        <nav id="navbar" class="navbar">
+            <ul>
+<!--                <li><a class="nav-link scrollto active" href="/home">Home</a></li>-->
+                <li><a class="nav-link scrollto" href="/user/login">로그인</a></li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+    </div>
+</div>
+
+</html>

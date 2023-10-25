@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="fragment-reply-form(reply, postId)">
+    <form th:action="@{|/posts/${postId}/replies/${reply.id}|}" method="post"
+          th:id="'replyForm-' + ${reply.id}" class="my-3" style="display: none;">
+        <div class="card">
+            <div class="card-body">
+                <textarea name="content" id="content" rows="1" class="form-control"></textarea>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-outline-primary" type="submit">등록</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    function toggleReplyForm(replyFormId) {
+        var replyForm = document.getElementById(replyFormId);
+        if (replyForm.style.display === "none" || replyForm.style.display === "") {
+            replyForm.style.display = "block";
+        } else {
+            replyForm.style.display = "none";
+        }
+    }
+</script>
+</html>

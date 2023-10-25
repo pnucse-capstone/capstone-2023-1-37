@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 header -->
+<div th:replace="fragments/header.html::fragment-header"></div>
+<style>
+    .container2 {
+        max-width: 1500px;
+    }
+    .table td {
+        height: 50px;
+    }
+    .btn-main{
+        margin-top: 0;
+    }
+</style>
+<body>
+<!-- 공통 navigation-->
+<div th:replace="fragments/nav.html::fragment-nav(${user})"></div>
+</br>
+</br>
+
+<section id="pricing" class="pricing">
+    <div class="row container container2 mx-auto" data-aos="fade-up">
+        <div class="section-title">
+            <h2>수강생 관리</h2>
+            <h3 th:text="${courseDTO.name}">강좌 이름</h3>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-2 order-1 order-sm-1">
+            <div th:replace="course/course-sidebar.html::fragment-sidebar(${courseDTO.id}, ${user})"></div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-8 col-lg-9 order-2 order-sm-2">
+            <div class="row container2 mx-auto">
+                <div class="accordion" id="accordion">
+                    <div th:each="studentDTO, iterStat : ${studentDTOs.getStudents()}">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" th:data-bs-target="'#collapse' + ${iterStat.index}"
+                                        th:text="${studentDTO.name}">수강생 이름
+                                </button>
+                            </h2>
+                            <div th:id="'collapse' + ${iterStat.index}" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr th:each="vm : ${studentDTO.getVms()}">
+                                            <td class="align-middle" style="width: 80%;" th:text="${vm.name}"></td>
+                                            <td class="align-middle" style="display: flex; align-items: center;">
+                                                <button class="btn-main btn-sm btn" th:data-nodePort="${vm.nodePort}" th:data-externalIp="${vm.externalIp}" onclick="connect(this)">접속</button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 공통 footer -->
+<div th:replace="fragments/footer.html::fragment-footer"></div>
+
+<!-- 공통 script -->
+<div th:replace="fragments/script.html::fragment-script"></div>
+</body>
+<script>
+    function connect(parameter) {
+        Swal.fire({
+            title : "접속하시겠습니까?",
+            showCancelButton: true,
+            confirmButtonColor: '#2487ce',
+            cancelButtonColor: '#fa5f5f',
+            confirmButtonText: '접속',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if(result.isConfirmed) {
+                var nodePort = parameter.getAttribute('data-nodePort');
+                var externalIp = parameter.getAttribute('data-externalIp');
+                window.open("https://"+externalIp+":"+nodePort, "_blank") // 새 창에서 켜짐
+            }
+        })
+    }
+</script>
+</html>

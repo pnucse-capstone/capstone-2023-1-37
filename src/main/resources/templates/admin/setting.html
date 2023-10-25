@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 header -->
+<div th:replace="fragments/header.html::fragment-header"></div>
+<style>
+    .container2 {
+        max-width: 600px;
+    }
+    .btn-custom {
+        max-width: 100px;
+    }
+</style>
+<body>
+
+<!-- 공통 navigation-->
+<div th:replace="fragments/nav.html::fragment-nav(${user})"></div>
+</br>
+</br>
+
+
+<section id="pricing" class="pricing">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title">
+            <h2>설정</h2>
+        </div>
+
+        <!-- Page content-->
+        <div class="row container2 d-flex justify-content-center mx-auto">
+            <form th:action th:object="${updateDTO}" method="post" class="row g-3 needs-validation">
+                <div class="row mb-3">
+                    <label for="vmMaxNum" class="col-sm-9 col-form-label">생성 가능한 가상 환경 최대 개수</label>
+                    <div class="col-sm-3">
+                        <input type="text" id="vmMaxNum" th:field="*{vmMaxNum}" class="form-control">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="courseCreateMaxNum" class="col-sm-9 col-form-label">생성 가능한 강좌 최대 개수</label>
+                    <div class="col-sm-3">
+                        <input type="text" id="courseCreateMaxNum" th:field="*{courseCreateMaxNum}" class="form-control">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="courseApplyMaxNum" class="col-sm-9 col-form-label">신청 가능한 강좌 최대 개수</label>
+                    <div class="col-sm-3">
+                        <input type="text" id="courseApplyMaxNum" th:field="*{courseApplyMaxNum}" class="form-control">
+                    </div>
+                </div>
+                <button class="btn btn-outline-primary btn-custom mx-auto" type="submit">수정</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- 공통 footer -->
+<div th:replace="fragments/footer.html::fragment-footer"></div>
+
+<!-- 공통 script -->
+<div th:replace="fragments/script.html::fragment-script"></div>
+</body>
+
+</html>

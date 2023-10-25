@@ -1,0 +1,6 @@
+cloudwatch:
+  credentials:
+    access-key: ""
+    secret-key: ""
+  s3:
+    bucket-name: "p2k-test"

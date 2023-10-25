@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="fragment-reply(replies, postId, userId)">
+    <!-- 댓글 작성 -->
+    <form th:action="@{|/posts/${postId}/replies|}" method="post" class="my-3">
+        <div class="card">
+            <div class="card-body">
+                <textarea name="content" id="content" rows="1" class="form-control"></textarea>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-outline-primary" type="submit">등록</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- 댓글 목록 -->
+    <div class="card my-3" th:each="reply : ${replies.getReplies()}"
+         th:style="'margin-left: ' + (${reply.step} * 20) + 'px'">
+        <!-- 다른 사용자의 댓글 -->
+        <div class="card-body" th:if="${userId ne reply.userId}">
+            <div class="card-text" style="display: flex; flex-direction: column;">
+                <span>
+                    <p th:text="${reply.author}" style="display: inline; margin-right: 10px;">댓글 작성자</p>
+                    <p th:text="${reply.createdDate}" style="display: inline;">댓글 작성일</p>
+                </span>
+                <p th:text="${reply.content}">댓글 내용</p>
+            </div>
+            <button class="btn btn-outline-primary btn-sm"
+                    th:onclick="|javascript:toggleReplyForm('replyForm-' + ${reply.id})|"
+                    type="button">답글</button>
+            <div th:insert="~{course/reply-form.html::fragment-reply-form(${reply}, ${postId})}"></div>
+        </div>
+        <!-- 나의 댓글 -->
+        <div class="card-body" th:if="${userId eq reply.userId}">
+            <div class="card-text" style="display: flex; flex-direction: column;">
+                <span>
+                    <p th:text="${reply.author}" style="display: inline; margin-right: 10px;">댓글 작성자</p>
+                    <p th:text="${reply.createdDate}" style="display: inline;">댓글 작성일</p>
+                </span>
+                <p th:text="${reply.content}">댓글 내용</p>
+            </div>
+            <div style="display: flex; align-items: center;">
+                <button th:if="${reply.userId} != null" class="btn btn-outline-primary btn-sm"
+                        th:onclick="|javascript:toggleReplyForm('replyForm-' + ${reply.id})|"
+                        type="button" style="display: inline-block; margin-right: 10px;">답글</button>
+                <button th:if="${reply.userId} != null" class="btn btn-outline-danger btn-sm"
+                        th:onclick="|location.href='@{/posts/{postId}/replies/{replyId}/delete(postId=${postDTO.id}, replyId=${reply.id})}'|"
+                        type="button" style="display: inline-block;">삭제</button>
+            </div>
+            <div th:insert="~{course/reply-form.html::fragment-reply-form(${reply}, ${postId})}"></div>
+        </div>
+    </div>
+    <br>
+    <!--페이지 처리-->
+    <div th:if="${!replies.getPageData().isEmpty}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${!replies.getPageData().hasPrevious} ? 'disabled'">
+                <a class="page-link" th:href="@{|?page=${replies.getPageData().number - 1}|}">
+                    <span>이전</span>
+                </a>
+            </li>
+            <li th:each="page : ${#numbers.sequence(replies.getPageData().getStartPage(), replies.getPageData().getEndPage())}"
+                th:classappend="${page == replies.getPageData().number} ? 'active'" class="page-item">
+                <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}|}"></a>
+            </li>
+            <li class="page-item" th:classappend="${!replies.getPageData().hasNext} ? 'disabled'">
+                <a class="page-link" th:href="@{|?page=${replies.getPageData().number + 1}|}">
+                    <span>다음</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<script>
+    function toggleReplyForm(replyFormId) {
+        var replyForm = document.getElementById(replyFormId);
+        if (replyForm.style.display === "none" || replyForm.style.display === "") {
+            replyForm.style.display = "block";
+        } else {
+            replyForm.style.display = "none";
+        }
+    }
+</script>
+</html>

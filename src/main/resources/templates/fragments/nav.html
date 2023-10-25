@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Top navigation-->
+<!--<nav th:fragment="fragment-nav" class="navbar bg-main2 navbar-expand-lg navbar-light border-bottom">-->
+<!--    <div class="container-fluid">-->
+<!--        <img src="/assets/menu.png" width="30" height="20" id="sidebarToggle">-->
+<!--        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>-->
+<!--        <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
+<!--            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">-->
+<!--                <li class="nav-item active"><a class="nav-link" href="/vm">가상환경</a></li>-->
+<!--                <li class="nav-item active"><a class="nav-link" href="/courses">강좌</a></li>-->
+<!--                <li class="nav-item"><a class="nav-link" href="/user/info">마이페이지</a></li>-->
+<!--                <li class="nav-item"><a class="nav-link" href="/user/logout">로그아웃</a></li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</nav>-->
+<div th:fragment="fragment-nav(user)" id="header" class="fixed-top">
+<div class="container d-flex align-items-center justify-content-between">
+    <a href="/home"><img class="m-1" src="/assets/p2k_logo_b.png" alt="" width="80" height="50"></a>
+
+<nav id="navbar" class="navbar">
+    <ul>
+        <li><a class="nav-link scrollto active" href="/home">Home</a></li>
+        <li class="dropdown"><a href="/vm"><span>가상환경</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+                <li><a href="/vm">나의 가상환경 목록</a></li>
+                <li><a href="/vm/create">가상환경 생성하기</a></li>
+                <li><a href="/vm/load">가상환경 로드하기</a></li>
+                <li><a href="/vm/search">가상환경 조회하기</a></li>
+<!--                <li><a href="/vm/menu">가상환경 생성/로드하기</a></li>-->
+            </ul>
+        </li>
+        <li class="dropdown"><a href="/courses"><span>강좌</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+                <li><a href="/courses">나의 강좌 목록</a></li>
+                <li><a th:if="${user.role.name() == 'ROLE_STUDENT' or user.role.name() == 'ROLE_ADMIN'}" href="/courses/application">강좌 신청하기</a></li>
+                <li><a th:if="${user.role.name() == 'ROLE_INSTRUCTOR' or user.role.name() == 'ROLE_ADMIN'}" href="/courses/create">강좌 생성하기</a></li>
+            </ul>
+        </li>
+        <li class="dropdown" th:if="${user.role.name() == 'ROLE_ADMIN'}">
+            <a href="/admin/resources"><span>관리자</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+                <li><a href="/admin/k8s-resources">k8s 모니터링</a></li>
+                <li><a href="/admin/s3-resources">s3 모니터링</a></li>
+                <li><a href="/admin/vms">가상환경 관리</a></li>
+                <li><a href="/admin/courses">강좌 관리</a></li>
+                <li><a href="/admin/users">사용자 관리</a></li>
+                <li><a href="/admin/setting">설정</a></li>
+            </ul>
+        </li>
+        <li><a class="nav-link scrollto o" href="/user/info">마이페이지</a></li>
+        <li><a class="nav-link scrollto" href="/user/logout">로그아웃</a></li>
+    </ul>
+    <i class="bi bi-list mobile-nav-toggle"></i>
+</nav>
+</div>
+</div>
+
+</html>

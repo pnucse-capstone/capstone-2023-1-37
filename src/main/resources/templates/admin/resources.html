@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .container2 {
+      max-width: 1300px;
+    }
+    .chart-wrap{
+      width: 600px;
+      height: 500px;
+    }
+    .chart-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .chart-item {
+      flex-basis: calc(25% - 20px);
+    }
+
+    @media screen and (max-width: 768px) {
+      .chart-item {
+        flex-basis: calc(50% - 20px); /* 화면 크기가 768px 이하일 때, 2개의 열로 표시 */
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .chart-item {
+        flex-basis: calc(100% - 20px); /* 화면 크기가 480px 이하일 때, 1개의 열로 표시 */
+      }
+    }
+  </style>
+</head>
+
+<!-- 공통 header -->
+<div th:replace="fragments/header.html::fragment-header"></div>
+<body>
+
+<!-- 공통 navigation-->
+<div th:replace="fragments/nav.html::fragment-nav(${user})"></div>
+</br>
+</br>
+
+<section id="pricing" class="pricing">
+  <div class="container" data-aos="fade-up">
+    <div class="section-title">
+      <h2>S3 리소스 모니터링</h2>
+    </div>
+    <div class="container2">
+      <div class="chart-grid">
+        <div class="chart-item"><div class="chart-wrap"><canvas id="chart1"></canvas></div></div>
+        <div class="chart-item"><div class="chart-wrap"><canvas id="chart2"></canvas></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 공통 footer -->
+<div th:replace="fragments/footer.html::fragment-footer"></div>
+
+<!-- 공통 script -->
+<div th:replace="fragments/script.html::fragment-script"></div>
+</body>
+<script th:inline="javascript">
+  /*<![CDATA[*/
+
+  function createChart(chartName, title, timestamp, value, yAxisLabel){
+    const ctx = document.getElementById(chartName);
+
+    const timeLabels = timestamp.map(instant => {
+      const date = new Date(instant);
+      return date.toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' });
+    });
+    timeLabels.reverse();
+
+    const data = {
+      labels: timeLabels,
+      datasets: [{
+        data: value,
+        borderColor: 'rgb(0, 78, 162)',
+        borderWidth: 1
+      }]
+    };
+
+    new Chart(ctx, {
+      type: 'line',
+      data: data,
+      options: {
+        plugins:{
+          legend: {
+            display: false
+          },
+          title: {
+            display: true,
+            align:'center',
+            position:'top',
+            text: title,
+            font: {
+              size: 15,
+              weight: 'normal',
+              color: 'black'
+            }
+          },
+        },
+        elements: {
+          point: {
+            radius: 0
+          }
+        },
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            grid:{
+              display: false
+            },
+            ticks: {
+              maxTicksLimit: 7,
+              font: {
+                size: 10
+              }
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: yAxisLabel,
+              font: {
+                size: 12,
+              },
+            },
+            ticks: {
+              font: {
+                size: 10
+              }
+            },
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+
+  createChart('chart1', '총 버킷 크기', /*[[${bucketSizeTimestamp}]]*/, /*[[${bucketSizeValue}]]*/, 'Bytes');
+  createChart('chart2', '총 객체 수', /*[[${numberOfObjectsTimestamp}]]*/, /*[[${numberOfObjectsValue}]]*/, 'Count');
+  /*]]>*/
+</script>
+</html>

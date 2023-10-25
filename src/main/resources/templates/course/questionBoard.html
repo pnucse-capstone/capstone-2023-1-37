@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 header -->
+<div th:replace="fragments/header.html::fragment-header"></div>
+<style>
+    .container2 {
+        max-width: 1500px;
+    }
+    .table th {
+        width: 5%;
+        background-color: #f8fbfe;
+    }
+    .table td {
+        height: 50px;
+    }
+</style>
+<body>
+
+<!-- 공통 navigation-->
+<div th:replace="fragments/nav.html::fragment-nav(${user})"></div>
+</br>
+</br>
+</br>
+
+<section id="pricing" class="pricing">
+    <div class="row container container2 mx-auto" data-aos="fade-up">
+        <div class="section-title">
+            <h2>질문 게시판</h2>
+            <h3 th:text="${courseDTO.name}">강좌 이름</h3>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-2 order-1 order-sm-1">
+            <div th:replace="course/course-sidebar.html::fragment-sidebar(${courseDTO.id}, ${user})"></div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-8 col-lg-9 order-2 order-sm-2">
+            <div class="row mx-auto">
+                <div class="col">
+                    <button class="btn btn-outline-primary float-end m-1"
+                            th:onclick="|location.href='@{/courses/{courseId}/question-board/save(courseId=${courseDTO.id})}'|"
+                            type="button">글쓰기</button>
+                    <table class="table table-hover table-responsive">
+                        <thead>
+                        <tr>
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>날짜</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="saveDTO : ${postDTOs.getPosts()}">
+                            <td class="align-middle"><a th:href="@{/courses/__${courseDTO.id}__/question-board/__${saveDTO.id}__}" th:text="${saveDTO.title}">게시물 제목</a></td>
+                            <td class="align-middle" th:text="${saveDTO.author}">게시물 작성자</td>
+                            <td class="align-middle" th:text="${saveDTO.createdDate}">게시물 날짜</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <!--페이지 처리-->
+                    <div th:if="${!postDTOs.getPageData().isEmpty}">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item" th:classappend="${!postDTOs.getPageData().hasPrevious} ? 'disabled'">
+                                <a class="page-link" th:href="@{|?page=${postDTOs.getPageData().number - 1}|}">
+                                    <span>이전</span>
+                                </a>
+                            </li>
+                            <li th:each="page : ${#numbers.sequence(postDTOs.getPageData().getStartPage(), postDTOs.getPageData().getEndPage())}"
+                                th:classappend="${page == postDTOs.getPageData().number} ? 'active'" class="page-item">
+                                <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                            </li>
+                            <li class="page-item" th:classappend="${!postDTOs.getPageData().hasNext} ? 'disabled'">
+                                <a class="page-link" th:href="@{|?page=${postDTOs.getPageData().number + 1}|}">
+                                    <span>다음</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 공통 footer -->
+<div th:replace="fragments/footer.html::fragment-footer"></div>
+
+<!-- 공통 script -->
+<div th:replace="fragments/script.html::fragment-script"></div>
+</body>
+</html>

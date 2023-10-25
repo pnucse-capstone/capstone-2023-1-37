@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 header -->
+<div th:replace="fragments/header.html::fragment-header"></div>
+
+<body>
+
+<!-- 공통 navigation-->
+<div th:replace="fragments/nav.html::fragment-nav(${user})"></div>
+
+</br>
+</br>
+
+<section id="services" class="services section-bg">
+    <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="section-title">
+            <h2>가상환경 로드하기</h2>
+        </div>
+
+        <div id="loading" class="loading" style="display: none;">
+            <img src="/assets/p2k_logo_b.png" alt="loading">
+        </div>
+
+        <div>
+            <input type="hidden" class="error" th:if="${vmError.errorMsg == 'true'}" th:value="true">
+            <input type="hidden" class="error" th:unless="${vmError.errorMsg == 'true'}" th:value="false">
+        </div>
+
+        <div class="row icon-boxes d-flex justify-content-center">
+            <div class="col-md-6 aos-init aos-animate mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="200">
+                <div class="icon-box">
+                    <form th:action="@{/vm/load}" th:object="${loadDTO}" method="post" style="text-align: center;" class="m-auto center-block" id="create">
+
+                        <div class="mb-4 row justify-content-center">
+                            <label for="name" class="col-sm-4 col-form-label" style="font-weight: bolder;">로드 key</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="key" th:field="*{key}" placeholder="key" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 row justify-content-center">
+                            <label for="name" class="col-sm-4 col-form-label" style="font-weight: bolder;">이름</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="이름" required>
+                            </div>
+                        </div>
+
+                        <div class="m-4 row justify-content-center">
+                            <label for="password" class="col-sm-4 col-form-label" style="font-weight: bolder;">비밀번호</label>
+                            <div class="col-sm-5">
+                                <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="비밀번호" required>
+                            </div>
+                        </div>
+
+                        <div class="m-4 row justify-content-center">
+                            <label class="col-sm-4 col-form-label" style="font-weight: bolder;">공개 범위
+                                <img src="/assets/question-mark.png" style="width: 20px; height: 20px;" title="공개 범위는 다른 사용자들에게 가상환경을 공개하는 범위를 말합니다. 전체공개 시 모든 사용자가 접속을 할 수 있고, 비공개 시 생성자만 접속 가능합니다.">
+                            </label>
+                            <div class="col-sm-5">
+                                전체공개 <input type="radio" class="radio-scope" name="scope" th:field="*{scope}" th:value="true" required>
+                                비공개 <input type="radio" class="radio-scope" name="scope" checked th:field="*{scope}" th:value="false">
+                            </div>
+                        </div>
+
+                        <div class="m-4 row justify-content-center">
+                            <label class="col-sm-4 col-form-label" style="font-weight: bolder;">접속자 권한 범위
+                                <img src="/assets/question-mark.png" style="width: 20px; height: 20px;" title="접속자 권한 범위는 전체 공개로 설정했을 시에 접속자의 제어 여부를 나타냅니다. '제어 가능'은 접속자도 가상환경을 제어할 수 있고, '보기만 가능'은 접속자는 가상환경을 제어하지 못하고 관전만 가능합니다.">
+                            </label>
+                            <div class="col-sm-5">
+                                <label>제어 가능 <input type="radio" class="radio-control" name="control" th:field="*{control}" th:value="false" required></label>&nbsp;
+                                <label>보기만 가능 <input type="radio" class="radio-control" name="control" checked th:field="*{control}" th:value="true"></label>&nbsp;
+                            </div>
+                        </div>
+
+                        <button class="mt-5 btn btn-lg btn-main btn" type="submit" id="create-btn">로드하기</button>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section><!-- End Hero -->
+
+<!-- 공통 footer -->
+<div th:replace="fragments/footer.html::fragment-footer"></div>
+
+<!-- 공통 script -->
+<div th:replace="fragments/script.html::fragment-script"></div>
+<script th:inline="javascript">
+
+    $('.radio-scope').click(function() {
+        var val = $('.radio-scope:checked').val(); // 체크된 Radio 버튼의 값을 가져옵니다.
+
+        if ( val == 'false' ) {
+            $('.radio-control').attr('disabled', true);
+        } else {
+            $('.radio-control').attr('disabled', false);
+        }
+    });
+
+    function alert(port) {
+        Swal.fire({
+            title : "로드하시겠습니까?",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '로드',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if(result.isConfirmed) {
+                location.href = "http://www.webdesktop.p2kcloud.com:"+port;
+            }
+        })
+    }
+
+    // $(document).ready(function() {
+    //     if ($('.error').val() == 'true' ) {
+    //         Swal.fire({
+    //             title: '해당 key 값으로 가상환경을 로드할 수 없습니다.',
+    //             confirmButtonColor: '#2487ce',
+    //             confirmButtonText: '확인'
+    //         });
+    //     }
+    // });
+</script>
+</body>
+
+</html>

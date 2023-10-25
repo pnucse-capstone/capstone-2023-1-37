@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- 공통 header -->
+<div th:replace="fragments/header.html::fragment-header"></div>
+<head>
+    <style>
+        @font-face {
+            font-family: 'GmarketSansMedium' !important;
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        .bg-login {
+            border-radius: 20px;
+            padding-left: 50px !important;
+            padding-right: 50px !important;
+        }
+
+        #hero2 {
+            font-family: 'GmarketSansMedium' !important;
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            background-size: cover;
+            position: relative;
+        }
+
+        #white-back {
+            background-color: rgba(255, 255, 255, 0.85) !important;
+        }
+
+        .btn-primary {
+            --bs-btn-color: #fff;
+            --bs-btn-bg: #2487ce;
+            --bs-btn-border-color: #2487ce;
+            --bs-btn-hover-color: #fff;
+            --bs-btn-hover-bg: #3194db;
+            --bs-btn-hover-border-color: #3194db;
+            --bs-btn-focus-shadow-rgb: 49, 132, 253;
+            --bs-btn-active-color: #fff;
+            --bs-btn-active-bg: #3194db;
+            --bs-btn-active-border-color: #3194db;
+            --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+            --bs-btn-disabled-color: #fff;
+            --bs-btn-disabled-bg: #2487fd;
+            --bs-btn-disabled-border-color: #2487fd;
+        }
+    </style>
+
+    <!-- Custom styles for this template -->
+    <link href="/css/login.css" rel="stylesheet">
+</head>
+
+<body class="text-center bg-body row" id="hero2">
+<section class="pb-1">
+<main class="bg-login form-signin bg-main1" data-aos="fade-up" id="white-back">
+    <div class="container mb-2">
+    <form th:action="@{/user/login}" th:object="${user}" method="POST">
+        <img class="mb-4" src="/assets/p2k_logo.png" href="/" alt="" width="150" height="105">
+        <h2 class="h3 mb-3 fw-normal">로그인</h2>
+
+        <div class="form-floating ">
+            <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Email">
+            <label for="email">email</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Password">
+            <label for="password">password</label>
+        </div>
+        <button class="w-100 mb-2 btn btn-primary" type="submit">로그인</button>
+    </form>
+    <div style="font-size: 13px; float:right;">
+<!--        <a th:href="@{/user/reset}">비밀번호 재설정</a>-->
+        <a href="/user/join">회원가입</a>
+    </div>
+        <br>
+    <hr class="my-4">
+    간편 로그인
+    <br>
+    <div>
+        <a href="/oauth2/authorization/naver" role="button"><img class="m-1" src="/assets/naver.png" alt="" width="50" height="50"></a>
+        <a href="/oauth2/authorization/kakao" role="button"><img class="m-1" src="/assets/kakao.png" alt="" width="50" height="50"></a>
+        <a href="/oauth2/authorization/google" role="button"><img class="m-1" src="/assets/google.png" alt="" width="50" height="50"></a>
+    </div>
+    </div>
+</main>
+</section>
+</body>
+
+<!-- 공통 script -->
+<div th:replace="fragments/script.html::fragment-script"></div>
+
+</html>

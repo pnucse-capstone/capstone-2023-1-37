@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 header -->
+<div th:replace="fragments/header.html::fragment-header"></div>
+<style>
+    .container2 {
+        max-width: 850px;
+    }
+    .btn-custom {
+        max-width: 100px;
+    }
+</style>
+<body>
+
+<!-- 공통 navigation-->
+<div th:replace="fragments/nav.html::fragment-nav(${user})"></div>
+</br>
+</br>
+
+
+<section id="pricing" class="pricing">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title">
+            <h2>강좌 생성하기</h2>
+        </div>
+
+        <!-- Page content-->
+        <div class="container2 d-flex justify-content-center  mx-auto">
+            <form action="course.html" th:action th:object="${saveDTO}" method="post" class="row g-3 needs-validation">
+                <div class="row mb-3">
+                    <label for="courseName" class="col-sm-2 col-form-label">강좌 이름</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="courseName" th:field="*{name}" class="form-control" required>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="description" class="col-sm-2 col-form-label">설명</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="description" th:field="*{description}" class="form-control" required>
+                    </div>
+                </div>
+                <button class="btn btn-outline-primary btn-custom mx-auto" type="submit">생성하기</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- 공통 footer -->
+<div th:replace="fragments/footer.html::fragment-footer"></div>
+
+<!-- 공통 script -->
+<div th:replace="fragments/script.html::fragment-script"></div>
+</body>
+
+</html>

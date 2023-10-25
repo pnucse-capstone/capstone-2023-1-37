@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 header -->
+<div th:replace="fragments/header.html::fragment-header"></div>
+<style>
+    .container2 {
+        max-width: 850px;
+    }
+</style>
+<body>
+
+<!-- 공통 navigation-->
+<div th:replace="fragments/nav.html::fragment-nav(${user})"></div>
+</br>
+</br>
+
+<section id="pricing" class="pricing">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title">
+            <h2>비밀번호 재설정</h2>
+        </div>
+
+        <!-- Page content-->
+        <div class="row container2 mx-auto">
+            <form th:action th:object="${resetDTO}" method="post" class="g-3 needs-validation" novalidate>
+                <div class="row mb-3">
+                    <label for="email" class="col-sm-2 col-form-label">이메일</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="email" th:field="*{email}" class="form-control">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="password" class="col-sm-2 col-form-label">새 비밀번호</label>
+                    <div class="col-sm-10">
+                        <input type="password" id="password" th:field="*{password}" class="form-control">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="passwordConf" class="col-sm-2 col-form-label">새 비밀번호 확인</label>
+                    <div class="col-sm-10">
+                        <input type="password" id="passwordConf" th:field="*{passwordConf}" class="form-control">
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-sm-6 text-center">
+                        <button class="btn btn-outline-primary" type="submit">설정</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- 공통 script -->
+<div th:replace="fragments/script.html::fragment-script"></div>
+</body>
+</html>

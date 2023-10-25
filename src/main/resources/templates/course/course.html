@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 header -->
+<div th:replace="fragments/header.html::fragment-header"></div>
+<style>
+    .container2 {
+        max-width: 850px;
+    }
+    .table th {
+        width: 10%;
+        background-color: #f8fbfe;
+    }
+    .table td {
+        height: 50px;
+    }
+</style>
+<body>
+
+<!-- 공통 navigation-->
+<div th:replace="fragments/nav.html::fragment-nav(${user})"></div>
+</br>
+</br>
+
+<section id="pricing" class="pricing">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title">
+            <h2>나의 강좌</h2>
+        </div>
+
+        <!-- Page content-->
+        <div class="row container2 mx-auto">
+            <div class="col">
+                <table class="table table-hover table-responsive">
+                    <thead>
+                    <tr>
+                        <th scope="col">NO.</th>
+                        <th scope="col">강좌 이름</th>
+                        <th scope="col">강좌 설명</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="courseDTO, iterStat : ${courseDTOs.getCourses()}">
+                        <td th:text="${iterStat.index + 1}" class="align-middle">#</td>
+                        <td class="align-middle"><a th:href="@{/courses/__${courseDTO.id}__/notice-board}" th:text="${courseDTO.name}">강좌 이름</a></td>
+                        <td class="align-middle" th:text="${courseDTO.description}">강좌 설명</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br>
+                <!--페이지 처리-->
+                <div th:if="${!courseDTOs.getPageData().isEmpty}">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" th:classappend="${!courseDTOs.getPageData().hasPrevious} ? 'disabled'">
+                            <a class="page-link" th:href="@{|?page=${courseDTOs.getPageData().number - 1}|}">
+                                <span>이전</span>
+                            </a>
+                        </li>
+                        <li th:each="page : ${#numbers.sequence(courseDTOs.getPageData().getStartPage(), courseDTOs.getPageData().getEndPage())}"
+                            th:classappend="${page == courseDTOs.getPageData().number} ? 'active'" class="page-item">
+                            <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                        </li>
+                        <li class="page-item" th:classappend="${!courseDTOs.getPageData().hasNext} ? 'disabled'">
+                            <a class="page-link" th:href="@{|?page=${courseDTOs.getPageData().number + 1}|}">
+                                <span>다음</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 공통 footer -->
+<div th:replace="fragments/footer.html::fragment-footer"></div>
+
+<!-- 공통 script -->
+<div th:replace="fragments/script.html::fragment-script"></div>
+</body>
+
+</html>

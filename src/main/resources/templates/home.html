@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 header -->
+<div th:replace="fragments/header.html::fragment-header"></div>
+<style>
+    .btn-home {
+        width: 220px;
+    }
+</style>
+<body>
+  <!-- 공통 nav -->
+  <div th:replace="fragments/nav.html::fragment-nav(${user})"></div>
+
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex align-items-center">
+    <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+      <div class="row justify-content-center">
+        <div class="col-xl-7 col-lg-9 text-center">
+          <h1>P2K web page</h1>
+          <h2><a th:text="${user.name}"></a>님 환영합니다.</h2>
+          <br>
+          <p>P2K는 <b style="color:#124265;">클라우드 기반 원격 데스크탑 서비스</b>를 제공합니다. <br>
+              언제 어디서든지 웹 페이지 접속만으로 <b style="color:#124265;">자신만의 가상환경을 생성, 접속, 공유</b>할 수 있습니다. <br>
+              또한 강좌에 속한 학생들은 교육자의 가상환경에 접속할 수 있고, <br>
+              교육자의 가상환경을 로드하여 <b style="color:#124265;">동일한 가상환경을 생성</b>할 수 있습니다.  <br><br>
+              아래 버튼으로 바로 가상환경을 생성하거나 강좌를 신청해 보세요.
+          </p>
+        </div>
+      </div>
+      <div class="text-center">
+          <a href="/vm/create" class="btn-get-started scrollto btn-home">가상환경 생성하기</a>
+
+          <a th:if="${user.role.name() == 'ROLE_INSTRUCTOR'}" href="/courses/create" class="btn-get-started scrollto btn-home">강좌 생성하기</a>
+          <a th:if="${user.role.name() != 'ROLE_INSTRUCTOR'}" href="/courses/application" class="btn-get-started scrollto btn-home">강좌 신청하기</a>
+      </div>
+
+    </div>
+  </section>
+
+  <main id="main">
+
+    <!--    강좌 목록-->
+    <section id="vm" class="pricing">
+      <div class="container" data-aos="fade-up">
+        </br>
+        </br>
+
+        <div class="section-title">
+          <h2><a th:text="${user.name}"></a>님의 가상환경 목록</h2>
+        </div>
+        </br>
+
+          <div class="row">
+              <div class="col-lg-3 col-md-5" data-aos="zoom-im" data-aos-delay="100" th:each="v : ${vm.getVms()}">
+
+                  <div class="box p-3">
+                      <div class="row">
+                          <div class="dropdown col-2">
+                              <div th:if="${v.state == 'stop'}">
+                              <button class="btn dropdown-toggle z" type="button" data-toggle="dropdown" id="dropdownBtn">
+                                  <!-- <img src="/assets/drop-down.png" width="10px" height="10px"/>-->
+                              </button>
+                              <div class="dropdown-menu">
+                                  <a class="dropdown-item" th:onclick="exportImage([[${v.imageId}]])">내보내기</a>
+                                  <a class="dropdown-item" >
+                                      <form class="form-inline m-0 p-0 col-3" th:action="@{/vm/delete/{id}(id=${v.id})}" method="post">
+                                          <input type="submit" class="m-0 p-0" style="background-color:transparent;border:0px transparent solid;" value="삭제하기">
+                                      </form>
+                                  </a>
+                                  <div class="dropdown-item" th:onclick="|location.href='@{/vm/update/{id}(id=${v.id})}'|">수정하기</div>
+                              </div>
+                              </div>
+                          </div>
+                          <h3 class="col-8 mb-4" th:text="${v.name}" style="font-size:25px"></h3>
+                      </div>
+
+                      <input hidden id="vmId" type="text" th:value="${v.id}"/>
+                      <input hidden id="vmPort" type="text" th:value="${v.port}"/>
+                      <input hidden id="vmImageId" type="text" th:value="${v.imageId}"/>
+                      <p class="m-0 ms-5 card-text text-start" th:if="${v.state == 'running'}"><span style="font-size: 12px; color: #adb5bd">상태</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;실행 중</span></p>
+                      <p class="m-0 ms-5 card-text text-start" th:if="${v.state == 'stop'}"><span style="font-size: 12px; color: #adb5bd">상태</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;중지</span></p>
+                      <p class="m-0 ms-5 card-text text-start"><span th:if="${v.scope}"><span style="font-size: 12px; color: #adb5bd">공개 범위</span><span>&nbsp;&nbsp;&nbsp;&nbsp;전체 공개</span></span></p>
+                      <p class="m-0 ms-5 card-text text-start"><span th:if="!${v.scope}"><span style="font-size: 12px; color: #adb5bd">공개 범위</span><span>&nbsp;&nbsp;&nbsp;&nbsp;비공개</span></span></p>
+                      <p class="m-0 ms-5 card-text text-start"><span th:if="${v.scope} and ${v.control}"><span style="font-size: 12px; color: #adb5bd">접속자 권한</span><span>&nbsp;&nbsp;제어 가능</span></span></p>
+                      <p class="m-0 ms-5 card-text text-start"><span th:if="${v.scope} and !${v.control}"><span style="font-size: 12px; color: #adb5bd">접속자 권한</span><span>&nbsp;&nbsp;보기만 가능</span></span></p>
+                      <p class="m-0 ms-5 card-text text-start" th:if="${v.courseName != null}"><span style="font-size: 12px; color: #adb5bd">연결된 강좌</span>&nbsp;&nbsp;<span th:text="${v.courseName}"></span></p>
+
+
+                      <div class="btn-wrap p-0">
+                          <div class="row d-flex justify-content-center m-0" th:if="${v.state == 'running'}">
+                              <div class="form-inline m-0 p-0 col-4">
+<!--                                  <button class="btn-main btn" th:onclick="|javascript:alert('${v.port}')|">접속</button>-->
+                                  <button class="btn-main btn" th:data-nodePort="${v.nodePort}" th:data-externalIp="${v.externalIp}" onclick="alert(this)">접속</button>
+                              </div>
+                              <form class="form-inline m-0 p-0 col-4" th:action="@{/vm/stop/{id}(id=${v.id})}" method="post">
+                                  <button class="btn-main btn" type="submit">중지</button>
+                              </form>
+                          </div>
+
+                          <div class="row d-flex justify-content-center" th:if="${v.state == 'stop'}">
+                              <div class="row d-flex justify-content-center" >
+                                  <form class="form-inline m-1 p-0 col-3" th:action="@{/vm/start/{id}(id=${v.id})}" method="post">
+                                      <button class="btn-main btn" type="submit">실행</button>
+                                  </form>
+                                  <form class="form-inline m-1 p-0 col-3" th:action="@{/vm/save/{id}(id=${v.id})}" method="post">
+                                      <button class="btn-main btn" type="submit">저장</button>
+                                  </form>
+                              </div>
+                          </div>
+
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+        </div>
+    </section><!-- End Pricing Section -->
+
+<!--    강좌 목록-->
+    <section id="course" class="pricing">
+      <div class="container" data-aos="fade-up">
+        </br>
+        </br>
+
+        <div class="section-title">
+          <h2 th:if="${user.role.name() == 'ROLE_INSTRUCTOR'}"><a th:text="${user.name}"></a>님이 생성한 강좌 목록</h2>
+            <h2 th:if="${user.role.name() != 'ROLE_INSTRUCTOR'}"><a th:text="${user.name}"></a>님이 신청한 강좌 목록</h2>
+        </div>
+        </br>
+
+        <div class="row">
+          <div class="col-lg-3 col-md-5" data-aos="zoom-im" data-aos-delay="100" th:each="c : ${courses.getCourses()}">
+            <div class="box">
+              <h3 style="font-size:20px"><a th:href="@{/courses/__${c.id}__/notice-board}" th:text="${c.name}"></a></h3>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Pricing Section -->
+
+
+
+  </main><!-- End #main -->
+
+  <script>
+
+      function alert(parameter) {
+          Swal.fire({
+              title : "접속하시겠습니까?",
+              showCancelButton: true,
+              confirmButtonColor: '#2487ce',
+              cancelButtonColor: '#fa5f5f',
+              confirmButtonText: '접속',
+              cancelButtonText: '취소'
+          }).then((result) => {
+              if(result.isConfirmed) {
+                  var nodePort = parameter.getAttribute('data-nodePort');
+                  var externalIp = parameter.getAttribute('data-externalIp');
+
+                  window.open("https://"+externalIp+":"+nodePort, "_blank") // 새 창에서 켜짐
+              }
+          })
+      }
+
+      function exportImage(imageId) {
+          Swal.fire({
+              title: '아래의 키를 복사해서 사용하세요',
+              text: imageId,
+              confirmButtonColor: '#2487ce',
+              confirmButtonText: '확인'
+          });
+      }
+  </script>
+  <!-- 공통 footer -->
+  <div th:replace="fragments/footer.html::fragment-footer"></div>
+
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- 공통 script -->
+  <div th:replace="fragments/script.html::fragment-script"></div>
+
+</body>
+
+</html>

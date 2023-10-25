@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 header -->
+<div th:replace="fragments/header.html::fragment-header"></div>
+<style>
+  .container2 {
+    max-width: 1300px;
+  }
+  .table th {
+    width: 10%;
+    background-color: #f8fbfe;
+    font-size: 14px;
+  }
+  .table td {
+    height: 50px;
+    font-size: 14px;
+  }
+</style>
+<body>
+
+<!-- 공통 navigation-->
+<div th:replace="fragments/nav.html::fragment-nav(${user})"></div>
+</br>
+</br>
+
+<section id="pricing" class="pricing">
+  <div class="container" data-aos="fade-up">
+    <div class="section-title">
+      <h2>사용자 관리</h2>
+    </div>
+
+    <!-- Page content-->
+    <div class="row container2 mx-auto">
+      <div class="col">
+        <table class="table table-hover table-responsive section-bg">
+          <thead>
+          <tr>
+            <th scope="col">NO.</th>
+            <th scope="col">이름</th>
+            <th scope="col">이메일</th>
+            <th scope="col">유형</th>
+            <th scope="col">상태</th>
+            <th scope="col">가상환경</th>
+            <th scope="col" style="width: 15%;">강좌/글/댓글</th>
+            <th scope="col">가입일</th>
+            <th scope="col" style="width: 15%;">승인</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="userDTO, iterStat : ${users.getUsers()}">
+            <td th:text="${iterStat.index + 1}" class="align-middle">#</td>
+            <td class="align-middle" th:text="${userDTO.name}">이름</td>
+            <td class="align-middle" th:text="${userDTO.email}">이메일</td>
+            <td class="align-middle" th:text="${userDTO.role.value}">유형</td>
+            <td class="align-middle" th:text="${userDTO.pending ? '승인대기' : '승인'}">상태</td>
+            <td class="align-middle" th:text="${userDTO.vmNum}">가상 환경</td>
+            <td class="align-middle" th:text="|${userDTO.courseNum}/${userDTO.postNum}/${userDTO.replyNum}|">강좌/글/댓글</td>
+            <td class="align-middle" th:text="${userDTO.createdDate}">가입일</td>
+            <td class="align-middle">
+              <form class="form-inline m-0 p-0" th:if="${userDTO.pending}" th:action="@{/admin/users/{id}/accept(id=${userDTO.id})}" method="post">
+                <button class="btn btn-main btn-sm m-0" type="submit">승인하기</button>
+              </form>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <br>
+        <!--페이지 처리-->
+        <div th:if="${!users.getPageData().isEmpty}">
+          <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${!users.getPageData().hasPrevious} ? 'disabled'">
+              <a class="page-link" th:href="@{|?page=${users.getPageData().number - 1}|}">
+                <span>이전</span>
+              </a>
+            </li>
+            <li th:each="page : ${#numbers.sequence(users.getPageData().getStartPage(), users.getPageData().getEndPage())}"
+                th:classappend="${page == users.getPageData().number} ? 'active'" class="page-item">
+              <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}|}"></a>
+            </li>
+            <li class="page-item" th:classappend="${!users.getPageData().hasNext} ? 'disabled'">
+              <a class="page-link" th:href="@{|?page=${users.getPageData().number + 1}|}">
+                <span>다음</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 공통 footer -->
+<div th:replace="fragments/footer.html::fragment-footer"></div>
+
+<!-- 공통 script -->
+<div th:replace="fragments/script.html::fragment-script"></div>
+</body>
+
+</html>

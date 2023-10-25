@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 header -->
+<div th:replace="fragments/header.html::fragment-header"></div>
+<style>
+    .container2 {
+        max-width: 1500px;
+    }
+</style>
+<body>
+
+<!-- 공통 navigation-->
+<div th:replace="fragments/nav.html::fragment-nav(${user})"></div>
+</br>
+</br>
+</br>
+
+<section id="pricing" class="pricing">
+    <div class="row container container2 mx-auto" data-aos="fade-up">
+        <div class="section-title">
+            <h2>교육자의 가상 환경 보기</h2>
+            <h3 th:text="${courseDTO.name}">강좌 이름</h3>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-2 order-1 order-sm-1">
+            <div th:replace="course/course-sidebar.html::fragment-sidebar(${courseDTO.id}, ${user})"></div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-8 col-lg-9 order-2 order-sm-2">
+            <div class="row mx-auto">
+                <div class="col-lg-4 col-md-5" data-aos="zoom-im" data-aos-delay="100" th:each="v : ${instructorVms.getVms()}">
+                    <div class="box p-3">
+                        <div>
+                            <h3 th:text="${v.name}" style="font-size:25px"></h3>
+                        </div>
+
+                        <input hidden id="vmId" type="text" th:value="${v.id}"/>
+                        <input hidden id="vmPort" type="text" th:value="${v.port}"/>
+                        <input hidden id="vmImageId" type="text" th:value="${v.imageId}"/>
+                        <p class="m-0 ms-5 card-text text-start" th:if="${v.state == 'running'}"><span style="font-size: 12px; color: #adb5bd">상태</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;실행 중</span></p>
+                        <p class="m-0 ms-5 card-text text-start" th:if="${v.state == 'stop'}"><span style="font-size: 12px; color: #adb5bd">상태</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;중지</span></p>
+                        <p class="m-0 ms-5 card-text text-start"><span th:if="${v.scope}"><span style="font-size: 12px; color: #adb5bd">공개 범위</span><span>&nbsp;&nbsp;&nbsp;&nbsp;전체 공개</span></span></p>
+                        <p class="m-0 ms-5 card-text text-start"><span th:if="!${v.scope}"><span style="font-size: 12px; color: #adb5bd">공개 범위</span><span>&nbsp;&nbsp;&nbsp;&nbsp;비공개</span></span></p>
+                        <p class="m-0 ms-5 card-text text-start"><span th:if="${v.control}"><span style="font-size: 12px; color: #adb5bd">접속자 권한</span><span>&nbsp;&nbsp;제어 가능</span></span></p>
+                        <p class="m-0 ms-5 card-text text-start"><span th:if="!${v.control}"><span style="font-size: 12px; color: #adb5bd">접속자 권한</span><span>&nbsp;&nbsp;보기만 가능</span></span></p>
+                        <p class="m-0 ms-5 card-text text-start" th:if="${v.courseName != null}"><span style="font-size: 12px; color: #adb5bd">연결된 강좌</span>&nbsp;&nbsp;<span th:text="${v.courseName}"></span></p>
+
+
+                        <div class="btn-wrap p-0">
+                            <div class="row d-flex justify-content-center m-0" th:if="${v.state == 'running'}">
+                                <div class="form-inline m-0 p-0 col-4">
+                                    <button class="btn-main btn" th:data-nodePort="${v.nodePort}" th:data-externalIp="${v.externalIp}" onclick="connect(this)">접속</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- 공통 footer -->
+<div th:replace="fragments/footer.html::fragment-footer"></div>
+
+<!-- 공통 script -->
+<div th:replace="fragments/script.html::fragment-script"></div>
+</body>
+<script>
+    function connect(parameter) {
+        Swal.fire({
+            title : "접속하시겠습니까?",
+            showCancelButton: true,
+            confirmButtonColor: '#2487ce',
+            cancelButtonColor: '#fa5f5f',
+            confirmButtonText: '접속',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if(result.isConfirmed) {
+                var nodePort = parameter.getAttribute('data-nodePort');
+                var externalIp = parameter.getAttribute('data-externalIp');
+                window.open("https://"+externalIp+":"+nodePort, "_blank") // 새 창에서 켜짐
+            }
+        })
+    }
+</script>
+</html>
