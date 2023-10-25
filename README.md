@@ -70,7 +70,7 @@
 
 ### **가상환경 관리 서버 구성도**
 
-<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/0b90616f-6ee0-49cc-9947-e9ab8bdabddf" width="700">
+<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/797fdc1d-7ab6-4747-bd6d-6cba2bb893de" width="700">
 
 - 가상환경 관리 서버는 웹 서버의 요청에 따라 가상환경 생성, 실행, 접속, 삭제를 수행하고 사용자의 docker image를 안전하게 저장한다.
 - **Kubernetes & Web Desktop Image Manager(Flask Server)**
