@@ -39,11 +39,11 @@
 
 ## **2. 팀소개**
 
-|**이름**|**Github/Email**|**역할**|
-|---|---|---|
-| **박소현** | • https://github.com/sososo0 <br> • sh0000@pusan.ac.kr |• 전체 구성 설계 및 구축 <br> • 클라우드(AWS, Naver Cloud) 환경 구축 및 멀티 클라우드 적용 <br> • Private Docker Registry 설계 및 구축 <br> • Web Desktop Manager 설계 및 구축 <br> • Kubernetes & Web Desktop Image Manger 설계 및 구축 <br> • 가상환경 API 구현(Flask) <br> • 서비스 배포|
-| **김기해** | • https://github.com/xcelxlorx <br> • xcelxlorx@gmail.com |• UI 설계 <br> • 강좌, 게시판, 관리자, 사용자 API 구현(SpringBoot) <br> • 모니터링 구현  <br> • 강좌, 게시판, 관리자, 사용자 페이지 구현|
-| **김수현** | • https://github.com/suuding <br> • tngus4789@naver.com |• 기능 정의서 작성 및 DB 설계 <br> • 로그인, 회원가입, 가상환경 API 구현(SpringBoot) <br> • Container Image 생성 및 관리(Flask) <br> • 웹 서버와 가상환경 서버 API 통신 구현 <br> • 로그인, 회원가입, 가상환경 페이지 구현 |
+|**이름**|**Github/Email**| **역할**                                                                                                                                                                                                                                                           |
+|---|---|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **박소현** | • https://github.com/sososo0 <br> • sh0000@pusan.ac.kr | • 전체 구성 설계 및 구축 <br> • 클라우드(AWS, Naver Cloud) 환경 구축 및 멀티 클라우드 적용 <br> • Private Docker Registry 설계 및 구축 <br> • Web Desktop Manager 설계 및 구축 <br> • Pod 관련 기능 설계 및 구현 <br> • Kubernetes & Web Desktop Image Manger 설계 및 구축 <br> • 가상환경 API 구현(Flask) <br> • 서비스 배포 |
+| **김기해** | • https://github.com/xcelxlorx <br> • xcelxlorx@gmail.com | • UI 설계 <br> • 강좌, 게시판, 관리자, 사용자 API 구현(SpringBoot) <br> • 모니터링 구현  <br> • 강좌, 게시판, 관리자, 사용자 페이지 구현                                                                                                                                                              |
+| **김수현** | • https://github.com/suuding <br> • tngus4789@naver.com | • 기능 정의서 작성 및 DB 설계 <br> • 로그인, 회원가입, 가상환경 API 구현(SpringBoot) <br> • Container Image 생성 및 관리(Flask) <br> • 웹 서버와 가상환경 서버 API 통신 구현 <br> • 로그인, 회원가입, 가상환경 페이지 구현                                                                                                 |
 
 <br>
 
