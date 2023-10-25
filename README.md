@@ -65,7 +65,7 @@
 
 ### **가상환경 관리 서버 구성도**
 
-<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/0b90616f-6ee0-49cc-9947-e9ab8bdabddf" width="700"/>
+<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/0b90616f-6ee0-49cc-9947-e9ab8bdabddf" width="700" style="border: 1px solid black;">
 
 - 가상환경 관리 서버는 웹 서버의 요청에 따라 가상환경 생성, 실행, 접속, 삭제를 수행하고 사용자의 docker image를 안전하게 저장한다.
 - **Kubernetes & Web Desktop Image Manager(Flask Server)**
@@ -79,7 +79,7 @@
 
 ### **웹 서버 구성도**
 
-<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/53403581-56e7-4988-a552-8773a2e15749" width="700"/>
+<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/53403581-56e7-4988-a552-8773a2e15749" width="700" style="border: 1px solid black;"/>
 
 - AWS의 EC2 인스턴스를 활용하여 웹 애플리케이션 호스팅과 웹 사이트를 제공한다.
 
@@ -87,7 +87,7 @@
 
 ### **Private Docker Registry 구성도**
 
-<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/55ebba5c-4753-405f-8860-0b8005ca6893" width="700"/>
+<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/55ebba5c-4753-405f-8860-0b8005ca6893" width="700" style="border: 1px solid black;"/>
 
 - 오픈 소스 컨테이너 레지스트리 Harbor와 AWS 클라우드 스토리지 서비스 S3를 결합하여 구축한다. Harbor는 Ec2 인스턴스 위에서 Multi Container 형태로 실행된다.
 - 트래픽 분산과 서비스 무중단을 위해 Auto Scaling Group으로 구성하고 Load Balancer를 연동한다.
@@ -98,7 +98,7 @@
 
 ### **관리자 서비스 구성도**
 
-<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/12e934a9-fa87-4ba1-b612-bc5a1b3187a5" width="700"/>
+<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/12e934a9-fa87-4ba1-b612-bc5a1b3187a5" width="700" style="border: 1px solid black;"/>
 
 - 관리자는 Web Server, 사용자의 Web Desktop, Kubernetes & Web Desktop Image Manager, private docker registry에 접근할 수 있다.
 
@@ -106,7 +106,7 @@
 
 ### **k8s 모니터링 구성도**
 
-<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/97a3b48b-d2ab-40e6-9e85-bbebf89aa45a" width="700"/>
+<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/97a3b48b-d2ab-40e6-9e85-bbebf89aa45a" width="700" style="border: 1px solid black;"/>
 
 - grafana를 통해 k8s를 모니터링한다.
 
@@ -114,7 +114,7 @@
 
 ### **s3 모니터링 구성도**
 
-<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/b3b8272d-64b9-4f11-bb3d-2a826d48677f" width="700"/>
+<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/b3b8272d-64b9-4f11-bb3d-2a826d48677f" width="700" style="border: 1px solid black;"/>
 
 - AWS CloudWatch를 통해 s3를 모니터링한다.
 
