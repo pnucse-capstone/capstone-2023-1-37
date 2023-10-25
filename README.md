@@ -1,10 +1,11 @@
-### **1. 프로젝트 소개**
+
+## **1. 프로젝트 소개**
 
 본 과제는 코로나 19 이후 원격 교육과 재택 근무 필요성이 급증한 현대 사회에서 교육 분야의 비대면 교육 혁신을 위해 **클라우드 기반의 원격 데스크탑 서비스(DaaS, Desktop-as-a-Service)와 여러 학습 관리 기능을 결합한 교육 플랫폼(LMS, Learning Management System)** 을 구축한다. 이를 통해 비대면 교육뿐만 아니라 학습 환경의 품질을 향상시키고 효과적인 학습 관리 서비스를 제공하고자 한다.
 
 <br>
 
-#### **과제 내용**
+### **과제 내용**
 - 언제 어디서든 접근 가능한 원격 데스크탑 환경을 제공한다.
 - 클라우드 기반 원격 데스크탑 서비스를 웹 서비스의 형태로 제공하여 별도의 애플리케이션 설치나 복잡한 설정 없이 간편하게 사용할 수 있다.
 - Kubernetes를 사용하여 autoscaling을 제공해 트래픽 증가, 장애 상황에 대응하여 안정적이고 중단 없는 서비스를 제공한다. 
@@ -17,7 +18,7 @@
 
 <br>
 
-#### **개발 환경**
+### **개발 환경**
 
 | 분야                    | 사용 기술 및 도구                                     |
 |-------------------------|------------------------------------------------------|
@@ -33,7 +34,7 @@
 
 <br>
 
-### **2. 팀소개**
+## **2. 팀소개**
 
 |**이름**|**Github/Email**|**역할**|
 |---|---|---|
@@ -43,9 +44,9 @@
 
 <br>
 
-### **3. 시스템 구성도**
+## **3. 시스템 구성도**
 
-#### **전체 구성도**
+### **전체 구성도**
 
 <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/6c655a5b-1d6d-4d5f-ab27-20d47d3d3623" width="700"/>
 
@@ -62,7 +63,7 @@
 
 <br>
 
-#### **가상환경 관리 서버 구성도**
+### **가상환경 관리 서버 구성도**
 
 <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/0b90616f-6ee0-49cc-9947-e9ab8bdabddf" width="700"/>
 
@@ -76,7 +77,7 @@
 
 <br>
 
-#### **웹 서버 구성도**
+### **웹 서버 구성도**
 
 <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/53403581-56e7-4988-a552-8773a2e15749" width="700"/>
 
@@ -84,7 +85,7 @@
 
 <br>
 
-#### **Private Docker Registry 구성도**
+### **Private Docker Registry 구성도**
 
 <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/55ebba5c-4753-405f-8860-0b8005ca6893" width="700"/>
 
@@ -95,7 +96,7 @@
 
 <br>
 
-#### **관리자 서비스 구성도**
+### **관리자 서비스 구성도**
 
 <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/12e934a9-fa87-4ba1-b612-bc5a1b3187a5" width="700"/>
 
@@ -103,7 +104,7 @@
 
 <br>
 
-#### **k8s 모니터링 구성도**
+### **k8s 모니터링 구성도**
 
 <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/97a3b48b-d2ab-40e6-9e85-bbebf89aa45a" width="700"/>
 
@@ -111,7 +112,7 @@
 
 <br>
 
-#### **s3 모니터링 구성도**
+### **s3 모니터링 구성도**
 
 <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/b3b8272d-64b9-4f11-bb3d-2a826d48677f" width="700"/>
 
@@ -119,15 +120,15 @@
 
 <br>
 
-### **4. 소개 및 시연 영상**
+## **4. 소개 및 시연 영상**
 
-#### **접속**
+### **접속**
 
 - [Web Service 접속 URL](www.p2kcloud.com)
 - [Private Docker Registry 접속 URL](registry.p2kcloud.com)
 
 
-#### **소개**
+### **소개**
 
 - 메인 페이지
 
@@ -159,13 +160,13 @@
 
 <br>
 
-#### **시연 영상**
+### **시연 영상**
 
 [![부산대학교 정보컴퓨터공학부 소개](http://img.youtube.com/vi/zh_gQ_lmLqE/0.jpg)](https://youtu.be/zh_gQ_lmLqE)
 
 <br>
 
-### **5. 설치 및 사용법**
+## **5. 설치 및 사용법**
 
 **Use [PNU-P2K](https://github.com/PNU-P2K) for Deploy**
 - [SpringBoot Application](https://github.com/PNU-P2K/webpage.git)
@@ -182,7 +183,7 @@ cp docker-compose.yml.example docker-compose.yml
 cp application-aws.yml.example application-aws.yml
 cp application-mariaDB.yml.example application-mariaDB.yml
 ```
-- #### docker-compose.yml
+- ### docker-compose.yml
 ```
 version: '3'
 services:
@@ -209,7 +210,7 @@ services:
     depends_on:
       - db
 ```
-- #### application-aws.yml
+- ### application-aws.yml
 ```
 cloudwatch:
   credentials:
@@ -218,7 +219,7 @@ cloudwatch:
   s3:
     bucket-name: "p2k"
 ```
-- #### application-mariaDB.yml
+- ### application-mariaDB.yml
 ```
 spring:
   datasource:
@@ -235,7 +236,7 @@ spring:
     generate-ddl: true
 ```
 **Execution**
-- #### Install Docker in SpringBoot & Flask Application
+- ### Install Docker in SpringBoot & Flask Application
 ```
 # Install Docker
 sudo apt-get update
@@ -248,7 +249,7 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io
 # Check Docker Install
 sudo systemctl status docker
 ```
-- #### SpringBoot Application
+- ### SpringBoot Application
 ```
 # Repository git clone
 git clone https://github.com/PNU-P2K/webpage.git
@@ -271,7 +272,7 @@ chmod +x gradlew
 ./gradlew clean build
 docker-compose up -d --build
 ```
-- #### Flask Application
+- ### Flask Application
 ```
 # Repository git clone
 git clone https://github.com/PNU-P2K/vm-server.git
