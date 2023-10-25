@@ -115,8 +115,8 @@
 
 ### **접속**
 
-- [Web Service 접속 URL](www.p2kcloud.com)
-- [Private Docker Registry 접속 URL](registry.p2kcloud.com)
+- [Web Service 접속 URL](http://www.p2kcloud.com)
+- [Private Docker Registry 접속 URL](https://registry.p2kcloud.com)  
 
 ### **소개**
 
