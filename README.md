@@ -68,8 +68,7 @@
 
 <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/797fdc1d-7ab6-4747-bd6d-6cba2bb893de" width="700">
 
-가상환경 관리 서버는 웹 서버의 요청에 따라 가상환경 생성, 실행, 접속, 삭제를 수행하고 사용자의 docker image를 안전하게 저장한다.
-<br>
+- 가상환경 관리 서버는 웹 서버의 요청에 따라 가상환경 생성, 실행, 접속, 삭제를 수행하고 사용자의 docker image를 안전하게 저장한다.
 - **Kubernetes & Web Desktop Image Manager(Flask Server)**
   - 사용자 요청을 바탕으로 k8s에 명령을 내리고 docker image를 관리한다.
 - **Web Desktop Manager(Kubernetes Server)**
