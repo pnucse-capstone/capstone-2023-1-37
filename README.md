@@ -1,11 +1,15 @@
+# 클라우드 기반 원격 DaaS 
+
+2023년 전기 졸업과제 37조 클라우드 기반 원격 DaaS
 
 ## **1. 프로젝트 소개**
 
-본 과제는 코로나 19 이후 원격 교육과 재택 근무 필요성이 급증한 현대 사회에서 교육 분야의 비대면 교육 혁신을 위해 **클라우드 기반의 원격 데스크탑 서비스(DaaS, Desktop-as-a-Service)와 여러 학습 관리 기능을 결합한 교육 플랫폼(LMS, Learning Management System)** 을 구축한다. 이를 통해 비대면 교육뿐만 아니라 학습 환경의 품질을 향상시키고 효과적인 학습 관리 서비스를 제공하고자 한다.
+### **개요**
 
-<br>
+- 본 과제는 코로나 19 이후 원격 교육과 재택 근무 필요성이 급증한 현대 사회에서 교육 분야의 비대면 교육 혁신을 위해 **클라우드 기반의 원격 데스크탑 서비스(DaaS, Desktop-as-a-Service)와 여러 학습 관리 기능을 결합한 교육 플랫폼(LMS, Learning Management System)** 을 구축한다. 이를 통해 비대면 교육뿐만 아니라 학습 환경의 품질을 향상시키고 효과적인 학습 관리 서비스를 제공하고자 한다.
 
-### **과제 내용**
+
+### **내용**
 - 언제 어디서든 접근 가능한 원격 데스크탑 환경을 제공한다.
 - 클라우드 기반 원격 데스크탑 서비스를 웹 서비스의 형태로 제공하여 별도의 애플리케이션 설치나 복잡한 설정 없이 간편하게 사용할 수 있다.
 - Kubernetes를 사용하여 autoscaling을 제공해 트래픽 증가, 장애 상황에 대응하여 안정적이고 중단 없는 서비스를 제공한다.
@@ -16,7 +20,6 @@
 - harbor와 s3를 사용한 private docker registry를 구축하여 사용자들의 가상 환경인 docker image를 안전하게 관리한다.
 - kubernetes로 구축한 서버를 프로메테우스(Prometheus)와 그라파나(Grafana)를 활용하여 모니터링한다. 또한, private docker registry에 사용된 s3를 AWS CloudWatch로 모니터링한다.
 
-<br>
 
 ### **개발 환경**
 
@@ -38,8 +41,8 @@
 
 |**이름**|**Github/Email**|**역할**|
 |---|---|---|
-| **박소현** | • https://github.com/sososo0 <br> • sh0000@pusan.ac.kr |• 인프라 설계 및 구축 <br> • 클라우드(AWS, Naver Cloud Platform) 환경 구축 <br> • 가상환경 API 구현(Flask) <br> • 서비스 배포|
-| **김기해** | • https://github.com/xcelxlorx <br> • xcelxlorx@gmail.com |• UI 설계 <br>• 강좌, 게시판, 관리자, 사용자 API 구현(SpringBoot) <br> • 모니터링 구현  <br> • 강좌, 게시판, 관리자, 사용자 페이지 구현|
+| **박소현** | • https://github.com/sososo0 <br> • sh0000@pusan.ac.kr |• 전체 구성 설계 및 구축 <br> • 클라우드(AWS, Naver Cloud) 환경 구축 및 멀티 클라우드 적용 <br> • Private Docker Registry 설계 및 구축 <br> • Web Desktop Manager 설계 및 구축 <br> • Kubernetes & Web Desktop Image Manger 설계 및 구축 <br> • 가상환경 API 구현(Flask) <br> • 서비스 배포|
+| **김기해** | • https://github.com/xcelxlorx <br> • xcelxlorx@gmail.com |• UI 설계 <br> • 강좌, 게시판, 관리자, 사용자 API 구현(SpringBoot) <br> • 모니터링 구현  <br> • 강좌, 게시판, 관리자, 사용자 페이지 구현|
 | **김수현** | • https://github.com/suuding <br> • tngus4789@naver.com |• 기능 정의서 작성 및 DB 설계 <br> • 로그인, 회원가입, 가상환경 API 구현(SpringBoot) <br> • Container Image 생성 및 관리(Flask) <br> • 웹 서버와 가상환경 서버 API 통신 구현 <br> • 로그인, 회원가입, 가상환경 페이지 구현 |
 
 <br>
@@ -48,9 +51,7 @@
 
 ### **전체 구성도**
 
-<kbd>
-<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/6c655a5b-1d6d-4d5f-ab27-20d47d3d3623" width="700" style="border: 1px solid black;"/>
-</kbd>
+<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/ace38ab5-1619-4afb-b47c-e5b964c55ca4" width="700"/>
 
 - **멀티 클라우드**
   - 해당 서비스는 멀티 클라우드 아키텍처로 구성되어 있으며, 클라우드 서비스 공급자는 AWS와 Naver CloudPlatform이다.
@@ -63,13 +64,9 @@
   - k8s 기반으로 구축된 Web Desktop Manager에서 가상 환경을 관리하고 사용자들의 리소스 사용량에 따라 k8s 환경을 scaling한다.
   - k8s 리소스 사용량을 보기 위해 모니터링한다.
 
-<br>
-
 ### **가상환경 관리 서버 구성도**
 
-<kbd>
-<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/0b90616f-6ee0-49cc-9947-e9ab8bdabddf" width="700" style="border: 1px solid black;">
-</kbd>
+<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/797fdc1d-7ab6-4747-bd6d-6cba2bb893de" width="700">
 
 - 가상환경 관리 서버는 웹 서버의 요청에 따라 가상환경 생성, 실행, 접속, 삭제를 수행하고 사용자의 docker image를 안전하게 저장한다.
 - **Kubernetes & Web Desktop Image Manager(Flask Server)**
@@ -79,56 +76,36 @@
 - **Private Docker Registry(Harbor)**
   - docker image를 저장하는 private 저장소이다.
 
-<br>
-
 ### **웹 서버 구성도**
 
-<kbd>
-<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/53403581-56e7-4988-a552-8773a2e15749" width="700" style="border: 1px solid black;"/>
-</kbd>
+<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/e37c90e0-dcf2-44da-8537-34d572d9b3ad" width="700"/>
 
 - AWS의 EC2 인스턴스를 활용하여 웹 애플리케이션 호스팅과 웹 사이트를 제공한다.
 
-<br>
-
 ### **Private Docker Registry 구성도**
 
-<kbd>
-<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/55ebba5c-4753-405f-8860-0b8005ca6893" width="700" style="border: 1px solid black;"/>
-</kbd>
+<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/adf36c37-ca05-4fa0-af6f-71d6a26efdb2" width="700"/>
 
 - 오픈 소스 컨테이너 레지스트리 Harbor와 AWS 클라우드 스토리지 서비스 S3를 결합하여 구축한다. Harbor는 Ec2 인스턴스 위에서 Multi Container 형태로 실행된다.
 - 트래픽 분산과 서비스 무중단을 위해 Auto Scaling Group으로 구성하고 Load Balancer를 연동한다.
 - Harbor와 S3를 연동하여 데이터 복제 및 백업을 지원한다.
 - 사용자는 CLI와 Web UI로 접근할 수 있다.
 
-<br>
-
 ### **관리자 서비스 구성도**
 
-<kbd>
-<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/12e934a9-fa87-4ba1-b612-bc5a1b3187a5" width="700" style="border: 1px solid black;"/>
-</kbd>
+<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/36863e2e-a933-4a71-8c65-4fa2d869b297" width="700"/>
 
 - 관리자는 Web Server, 사용자의 Web Desktop, Kubernetes & Web Desktop Image Manager, private docker registry에 접근할 수 있다.
 
-<br>
-
 ### **k8s 모니터링 구성도**
 
-<kbd>
-<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/97a3b48b-d2ab-40e6-9e85-bbebf89aa45a" width="700" style="border: 1px solid black;"/>
-</kbd>
+<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/41f7d3a8-8e94-4ade-8458-517d7fdfb428" width="700"/>
 
-- grafana를 통해 k8s를 모니터링한다.
-
-<br>
+- Grafana를 통해 k8s를 모니터링한다.
 
 ### **s3 모니터링 구성도**
 
-<kbd>
-<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/b3b8272d-64b9-4f11-bb3d-2a826d48677f" width="700" style="border: 1px solid black;"/>
-</kbd>
+<img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/c08197e0-6c48-4818-8282-707f5d309ad2" width="700"/>
 
 - AWS CloudWatch를 통해 s3를 모니터링한다.
 
@@ -141,19 +118,16 @@
 - [Web Service 접속 URL](www.p2kcloud.com)
 - [Private Docker Registry 접속 URL](registry.p2kcloud.com)
 
-
 ### **소개**
 
 |**이름**|**내용**|
 |:---:|:---:|
-| **메인 페이지** | <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/582af3f5-a7e7-4205-a16c-9dd87259f86b" width="400"/> |
-| **자신의 가상환경 목록 화면** | <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/bc021408-0776-4581-8a73-e692dbbcbfac" width="400"/> |
-| **가상환경 접속 화면** | <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/bc810eb8-ce5c-4e91-9cfe-17ed1a1a1f29" width="400"/> |
-| **강좌 게시판 화면** | <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/eb6febe5-cd71-44c4-9e04-44a54cb1eb4d" width="400"/> | 
-| **교육자의 가상환경 화면** | <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/08b5bb08-3762-4a5b-ba58-68e83eac944b" width="400"/> | 
-| **관리자의 모니터링 화면** | <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/a78dada9-b6ee-4332-b7e3-5799a050db6e" width="400"/> | 
-
-<br>
+| **메인 페이지** | <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/582af3f5-a7e7-4205-a16c-9dd87259f86b" width="550"/> |
+| **자신의 가상환경 목록 화면** | <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/bc021408-0776-4581-8a73-e692dbbcbfac" width="550"/> |
+| **가상환경 접속 화면** | <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/bc810eb8-ce5c-4e91-9cfe-17ed1a1a1f29" width="550"/> |
+| **강좌 게시판 화면** | <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/eb6febe5-cd71-44c4-9e04-44a54cb1eb4d" width="550"/> | 
+| **교육자의 가상환경 화면** | <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/08b5bb08-3762-4a5b-ba58-68e83eac944b" width="550"/> | 
+| **관리자의 모니터링 화면** | <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/a78dada9-b6ee-4332-b7e3-5799a050db6e" width="550"/> | 
 
 ### **시연 영상**
 
@@ -163,11 +137,9 @@
 
 ## **5. 설치 및 사용법**
 
-**Use [PNU-P2K](https://github.com/PNU-P2K) for Deploy**
+### **Use [PNU-P2K](https://github.com/PNU-P2K) for Deploy** 
 - [SpringBoot Application](https://github.com/PNU-P2K/webpage.git)
 - [Flask Application](https://github.com/PNU-P2K/vm-server.git)
-
-<br>
 
 ### Set Env
 
