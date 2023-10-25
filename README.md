@@ -8,7 +8,6 @@
 
 - 본 과제는 코로나 19 이후 원격 교육과 재택 근무 필요성이 급증한 현대 사회에서 교육 분야의 비대면 교육 혁신을 위해 **클라우드 기반의 원격 데스크탑 서비스(DaaS, Desktop-as-a-Service)와 여러 학습 관리 기능을 결합한 교육 플랫폼(LMS, Learning Management System)** 을 구축한다. 이를 통해 비대면 교육뿐만 아니라 학습 환경의 품질을 향상시키고 효과적인 학습 관리 서비스를 제공하고자 한다.
 
-<br>
 
 ### **내용**
 - 언제 어디서든 접근 가능한 원격 데스크탑 환경을 제공한다.
@@ -21,7 +20,6 @@
 - harbor와 s3를 사용한 private docker registry를 구축하여 사용자들의 가상 환경인 docker image를 안전하게 관리한다.
 - kubernetes로 구축한 서버를 프로메테우스(Prometheus)와 그라파나(Grafana)를 활용하여 모니터링한다. 또한, private docker registry에 사용된 s3를 AWS CloudWatch로 모니터링한다.
 
-<br>
 
 ### **개발 환경**
 
@@ -66,8 +64,6 @@
   - k8s 기반으로 구축된 Web Desktop Manager에서 가상 환경을 관리하고 사용자들의 리소스 사용량에 따라 k8s 환경을 scaling한다.
   - k8s 리소스 사용량을 보기 위해 모니터링한다.
 
-<br>
-
 ### **가상환경 관리 서버 구성도**
 
 <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/797fdc1d-7ab6-4747-bd6d-6cba2bb893de" width="700">
@@ -80,15 +76,11 @@
 - **Private Docker Registry(Harbor)**
   - docker image를 저장하는 private 저장소이다.
 
-<br>
-
 ### **웹 서버 구성도**
 
 <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/e37c90e0-dcf2-44da-8537-34d572d9b3ad" width="700"/>
 
 - AWS의 EC2 인스턴스를 활용하여 웹 애플리케이션 호스팅과 웹 사이트를 제공한다.
-
-<br>
 
 ### **Private Docker Registry 구성도**
 
@@ -99,23 +91,17 @@
 - Harbor와 S3를 연동하여 데이터 복제 및 백업을 지원한다.
 - 사용자는 CLI와 Web UI로 접근할 수 있다.
 
-<br>
-
 ### **관리자 서비스 구성도**
 
 <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/36863e2e-a933-4a71-8c65-4fa2d869b297" width="700"/>
 
 - 관리자는 Web Server, 사용자의 Web Desktop, Kubernetes & Web Desktop Image Manager, private docker registry에 접근할 수 있다.
 
-<br>
-
 ### **k8s 모니터링 구성도**
 
 <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/41f7d3a8-8e94-4ade-8458-517d7fdfb428" width="700"/>
 
 - Grafana를 통해 k8s를 모니터링한다.
-
-<br>
 
 ### **s3 모니터링 구성도**
 
@@ -132,8 +118,6 @@
 - [Web Service 접속 URL](www.p2kcloud.com)
 - [Private Docker Registry 접속 URL](registry.p2kcloud.com)
 
-<br>
-
 ### **소개**
 
 |**이름**|**내용**|
@@ -144,8 +128,6 @@
 | **강좌 게시판 화면** | <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/eb6febe5-cd71-44c4-9e04-44a54cb1eb4d" width="550"/> | 
 | **교육자의 가상환경 화면** | <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/08b5bb08-3762-4a5b-ba58-68e83eac944b" width="550"/> | 
 | **관리자의 모니터링 화면** | <img src="https://github.com/pnucse-capstone/capstone-2023-1-37/assets/96944649/a78dada9-b6ee-4332-b7e3-5799a050db6e" width="550"/> | 
-
-<br>
 
 ### **시연 영상**
 
@@ -158,8 +140,6 @@
 **Use [PNU-P2K](https://github.com/PNU-P2K) for Deploy**
 - [SpringBoot Application](https://github.com/PNU-P2K/webpage.git)
 - [Flask Application](https://github.com/PNU-P2K/vm-server.git)
-
-<br>
 
 ### Set Env
 
