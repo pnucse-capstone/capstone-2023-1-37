@@ -167,7 +167,8 @@ def start():
 
     time.sleep(30)
 
-    os.popen("kubectl uncordon " + maxMemUseNode + " --kubeconfig /root/kubeconfig.yml") # 다시 풀어주기
+    if len(nodes) >= 2:
+        os.popen("kubectl uncordon " + maxMemUseNode + " --kubeconfig /root/kubeconfig.yml") # 다시 풀어주기
 
     stream1 = os.popen(func.getPodName(port))
     podName = stream1.read()[4:-1]
