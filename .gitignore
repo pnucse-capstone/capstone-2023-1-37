@@ -39,9 +39,11 @@ out/
 
 # hidden file
 init.sql
+/src/main/resources/ssl/
 
 #hidden yml
 application-mariaDB.yml
 application-aws.yml
 .mariaDB_env
 docker-compose.yml
+application-server.yml
