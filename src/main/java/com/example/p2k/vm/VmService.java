@@ -73,7 +73,7 @@ public class VmService {
 
     @Transactional
     public void update(Long id, VmRequest.UpdateDTO requestDTO) throws Exception {
-       //vmRepository.update(id, requestDTO.getName(), requestDTO.getDescription(), requestDTO.getCourseId());
+        //vmRepository.update(id, requestDTO.getName(), requestDTO.getDescription(), requestDTO.getCourseId());
 
         Vm vm = vmRepository.findById(id).orElseThrow(
                 () -> new Exception404("해당 가상환경은 존재하지 않습니다.")
@@ -137,7 +137,6 @@ public class VmService {
         System.out.println("res = " + res.getContainerId());
         System.out.println("res.getImageId() = " + res.getImageId());
         System.out.println("res: "+ res);
-        System.out.println("res.getIP: " + res.getExternalNodeIp());
 
         // flask에서 받은 응답으로 가상환경 생성하고 저장
         Vm vm = Vm.builder()
@@ -149,7 +148,6 @@ public class VmService {
                 .user(user)
                 .port(portnum)
                 .nodePort(nodePort)
-                .externalNodeIp(res.getExternalNodeIp())
                 .containerId(res.getContainerId())
                 .imageId("")
                 .state("stop")
@@ -206,7 +204,6 @@ public class VmService {
                 .user(user)
                 .port(portnum)
                 .nodePort(nodePort)
-                .externalNodeIp(res.getExternalNodeIp())
                 .state("stop")
                 .imageId("")
                 .vmKey(key)
@@ -244,10 +241,14 @@ public class VmService {
         // header, body로 requestDTO 만들기
         HttpEntity<String> entity = new HttpEntity<>(jsonStr ,headers);
 
-        // flask로 요청보냄
-        restTemplate.postForEntity(url, entity, VmResponseFtS.startDTO.class);
+        // flask로 요청보내고 받아옴
+        ResponseEntity<?> response = restTemplate.postForEntity(url, entity, VmResponseFtS.startDTO.class);
+        String responseBody = ob.writeValueAsString(response.getBody());
+        VmResponseFtS.startDTO res = ob.readValue(responseBody, VmResponseFtS.startDTO.class);
+
 
         vm.updateState("running");
+        vm.setExternalNodeIp(res.getExternalNodeIp());
     }
 
     @Transactional
