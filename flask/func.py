@@ -12,10 +12,6 @@ BS = 16
 pad = (lambda s: s + (BS - len(s) % BS) * chr(BS - len(s) % BS).encode())
 unpad = (lambda s: s[:-ord(s[len(s)-1:])])
 
-extractNodeInfos = dict()
-extractPodInfos = dict()
-extractNodeCPUs = dict()
-
 # pv pod 만드는 함수
 def generatePVPodYaml(pvName, storageClassName, pathName) :
     PVDefinition = {
@@ -203,6 +199,8 @@ def extractNodeInfo():
 
     print("nodeInfo: ", nodeInfoList)
 
+    extractNodeInfos = dict()
+
     for nodeInfo in nodeInfoList:
         node = nodeInfo.split()
         nodeName, nodeExternalIp = node[0], node[6]
@@ -223,6 +221,8 @@ def extractPodInfo():
 
     print("podInfo: ", podInfoList)
 
+    extractPodInfos = dict()
+
     for podInfo in podInfoList:
         pod = podInfo.split()
         podName, nodeName = pod[0], pod[6]
@@ -237,7 +237,7 @@ def extractNodeIpOfPod(nodeList):
 
     for _, nodeName in podList.items():
         if nodeName in nodeList:
-            return extractNodeInfos[nodeName]
+            return nodeList[nodeName]
 
     return "Not Found"
 
@@ -338,3 +338,72 @@ class AESCipher(object):
 
 key = "thisiskey"
 aes = AESCipher(key)
+
+#=====================
+
+# node들의 cpu 사용량 추출하기
+def extractNodeCPUAndMemory():
+
+    result = os.popen("kubectl top nodes --kubeconfig /root/kubeconfig.yml").read()
+
+    print("result:", result)
+
+    nodeUseInfoList = result.split('\n')[1:-1]
+
+    extractNodeCPUs = dict()
+
+    for nodeUseInfo in nodeUseInfoList:
+        node = nodeUseInfo.split()
+        nodeName, cpuUse, memoryUse = node[0], node[2], node[4]
+        extractNodeCPUs[nodeName] = [cpuUse, memoryUse]
+
+    return extractNodeCPUs
+
+# 30초 동안 memory 사용량이 최대인 노드들 추출
+def findMinMaxCPUNodesV2(nodeCpuList):
+
+    maxMemUseNode = ''
+    maxMemUse = 0
+
+    for _ in range(30): # 총 30초
+        for nodeName, resourceUse in nodeCpuList.items():
+            temp = float(resourceUse[1][:-1])
+            if temp >= 70: # 메모리 사용률 70퍼 이상
+                if temp > maxMemUse:
+                    maxMemUse = temp
+                    maxMemUseNode = nodeName
+                    maxMemUse = float(resourceUse[1][:-1])
+                if temp == maxMemUse:
+                    tempCpu = float(resourceUse[0][:-1])
+                    if tempCpu > maxMemUse:
+                        maxMemUse = temp
+                        maxMemUseNode = nodeName
+                        maxMemUse = tempCpu
+
+        time.sleep(1) # 1초씩
+
+    return maxMemUse, maxMemUseNode
+
+# 30초 동안 memory 사용량이 최대인 노드들 추출
+def findMaxMemNodes(nodeCpuList):
+
+    maxMemUseNode = ''
+    maxMemUse = 0
+
+    for _ in range(30): # 총 30초
+        for nodeName, resourceUse in nodeCpuList.items():
+            temp = float(resourceUse[1][:-1])
+            if temp > maxMemUse:
+                maxMemUse = temp
+                maxMemUseNode = nodeName
+                maxMemUse = float(resourceUse[1][:-1])
+            if temp == maxMemUse:
+                tempCpu = float(resourceUse[0][:-1])
+                if tempCpu > maxMemUse:
+                    maxMemUse = temp
+                    maxMemUseNode = nodeName
+                    maxMemUse = tempCpu
+
+        time.sleep(1) # 1초씩
+
+    return maxMemUse, maxMemUseNode

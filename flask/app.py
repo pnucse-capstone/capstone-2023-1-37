@@ -62,23 +62,10 @@ def create():
     print(deploymentPodYaml)
     print(servicePodYaml)
 
-    os.popen(func.applyPodCmd(pvFilePath))
-    os.popen(func.applyPodCmd(pvcFilePath))
-    os.popen(func.applyPodCmd(deploymentFilePath))
-    os.popen(func.applyPodCmd(serviceFilePath))
-
-    nodeList = func.extractNodeInfo()
-    time.sleep(60)
-    externalNodeIp = func.extractNodeIpOfPod(nodeList)
-
-    print("nodes: ", nodeList)
-    print("externalIp: ", externalNodeIp)
-
     response = {
             'port': port,
             'containerId' : enContainerId,
             'imageId' : enContainerId,#enImageId,
-            'externalNodeIp': externalNodeIp
         }
 
     return jsonify(response), 200
@@ -125,25 +112,8 @@ def load() :
     print(deploymentPodYaml)
     print(servicePodYaml)
 
-    time.sleep(5)
-    os.popen(func.applyPodCmd(pvFilePath))
-    time.sleep(5)
-    os.popen(func.applyPodCmd(pvcFilePath))
-    time.sleep(5)
-    os.popen(func.applyPodCmd(deploymentFilePath))
-    time.sleep(5)
-    os.popen(func.applyPodCmd(serviceFilePath))
-
-    nodeList = func.extractNodeInfo()
-    time.sleep(60)
-    externalNodeIp = func.extractNodeIpOfPod(nodeList)
-
-    print("nodes: ", nodeList)
-    print("externalIp: ", externalNodeIp)
-
     response = {
             'port': port,
-            'externalNodeIp': externalNodeIp
         }
 
 
@@ -171,12 +141,33 @@ def start():
     deploymentFilePath = "/home/yaml/"+vmName+"Deployment.yaml"
     serviceFilePath = "/home/yaml/"+vmName+"Service.yaml"
 
+    nodes = func.extractNodeCPUAndMemory()
+    if len(nodes) >= 2:
+        maxMemUse, maxMemUseNode = func.findMaxMemNodes(nodes)
+        print("maxMemUseNodee: ", maxMemUseNode)
+        print("\n maxMemUse: ", maxMemUse)
+
+        os.popen("kubectl cordon " + maxMemUseNode + " --kubeconfig /root/kubeconfig.yml") # 스케줄 불가로 만들기 - 더이상 pod 할당 안되게
+
+        time.sleep(30) # 30초 대기
+
+        result = os.popen("kubectl get nodes " + maxMemUseNode + " --kubeconfig /root/kubeconfig.yml").read()
+
+        print("result:", result)
+
+        nodeInfo = result.split('\n')[1:-1]
+        status = nodeInfo[0].split()[1]
+
+        print("status: ", status)
+
     os.popen(func.applyPodCmd(pvFilePath))
     os.popen(func.applyPodCmd(pvcFilePath))
     os.popen(func.applyPodCmd(deploymentFilePath))
     os.popen(func.applyPodCmd(serviceFilePath))
 
-    time.sleep(3)
+    time.sleep(30)
+
+    os.popen("kubectl uncordon " + maxMemUseNode + " --kubeconfig /root/kubeconfig.yml") # 다시 풀어주기
 
     stream1 = os.popen(func.getPodName(port))
     podName = stream1.read()[4:-1]
@@ -192,9 +183,18 @@ def start():
 
     time.sleep(2)
 
+    nodeList = func.extractNodeInfo()
+    time.sleep(30)
+    externalNodeIp = func.extractNodeIpOfPod(nodeList)
+
+    print("nodes: ", nodeList)
+    print("externalIp: ", externalNodeIp)
+
     response = {
             'port' : port,
-            'containerId' : containerId
+            'containerId' : containerId,
+            'externalNodeIp': externalNodeIp
+
         }
 
     return jsonify(response), 200
