@@ -115,7 +115,7 @@
 
 ### **| 접속**
 
-- **[Web Service 접속 URL]** : http://www.p2kcloud.com
+- **[Web Service 접속 URL]** : https://www.p2kcloud.com
 - **[Private Docker Registry 접속 URL]** : https://registry.p2kcloud.com  
 
 ### **| 소개**
@@ -149,6 +149,7 @@ Copy example yml file to set env
 cp docker-compose.yml.example docker-compose.yml
 cp application-aws.yml.example application-aws.yml
 cp application-mariaDB.yml.example application-mariaDB.yml
+cp application-server.yml.example application-server.yml
 ```
 - **docker-compose.yml**
 ```
@@ -202,6 +203,16 @@ spring:
     show-sql: true
     generate-ddl: true
 ```
+- **application-server.yml**
+```
+server:
+  port: 443
+  ssl:
+    key-store: classpath:ssl/keystore.p12
+    key-store-type: PKCS12
+    key-store-password: #password
+```
+
 ### **| Execution**
 - **Install Docker in SpringBoot & Flask Application**
 ```
