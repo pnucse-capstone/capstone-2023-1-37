@@ -269,5 +269,5 @@ pip install pycrypto
 docker pull registry.p2kcloud.com/base/1/kasmweb:v1
 
 # Run Flask Application
-python3 app_v7.py
+python3 app_v8.py
 ```
