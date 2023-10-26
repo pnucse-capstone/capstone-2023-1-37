@@ -4,3 +4,4 @@ spring:
       - aws
       - prod
       - mariaDB
+      - server
