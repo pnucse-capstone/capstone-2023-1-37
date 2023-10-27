@@ -175,6 +175,7 @@ services:
     build: .
     ports:
       - 80:8080
+      - 443:443
     depends_on:
       - db
 ```
