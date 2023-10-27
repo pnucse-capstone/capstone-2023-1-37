@@ -131,7 +131,7 @@
 
 ### **| 시연 영상**
 
-[![P2K 서비스 소개](https://www.youtube.com/vi/M0BChab1-Rk/0.jpg)](https://www.youtube.com/watch?v=M0BChab1-Rk)
+[![P2K 서비스 소개](https://img.youtube.com/vi/M0BChab1-Rk/0.jpg)](https://www.youtube.com/watch?v=M0BChab1-Rk)
 
 <br>
 
