@@ -1,7 +1,6 @@
 package com.example.p2k.user;
 
 import com.example.p2k._core.security.CustomUserDetails;
-import com.example.p2k._core.validator.JoinValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +19,6 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
-    private final JoinValidator joinValidator;
 
     // 사용자 회원가입 페이지 GET
     @GetMapping("/join")

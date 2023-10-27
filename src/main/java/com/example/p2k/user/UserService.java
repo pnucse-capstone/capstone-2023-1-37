@@ -85,7 +85,6 @@ public class UserService {
         User user = getUser(id);
         courseUserRepository.deleteByUserId(id);
         vmRepository.deleteByUserId(id);
-        //TODO: 해당 사용자의 가상 환경 전체 삭제
         userRepository.delete(user);
     }
 

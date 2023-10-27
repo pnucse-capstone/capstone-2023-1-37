@@ -1,5 +1,6 @@
 package com.example.p2k.user;
 
+import com.example.p2k._core.util.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

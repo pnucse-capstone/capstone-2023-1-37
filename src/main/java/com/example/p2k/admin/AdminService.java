@@ -90,7 +90,10 @@ public class AdminService {
 
     private List<Integer> getStudentNums(Page<Course> courses) {
         return courses.stream()
-                .mapToInt(course -> courseUserRepository.countByCourseId(course.getId()) - 1)
+                .mapToInt(course -> {
+                    int cnt = courseUserRepository.countByCourseId(course.getId());
+                    return Math.max(cnt, 0);
+                })
                 .boxed()
                 .toList();
     }

@@ -1,6 +1,6 @@
 package com.example.p2k.course;
 
-import com.example.p2k.user.BaseTimeEntity;
+import com.example.p2k._core.util.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
